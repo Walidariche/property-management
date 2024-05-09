@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+
 public class Client implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +24,13 @@ public class Client implements Serializable {
 
     @OneToMany(mappedBy = "client")
     private List<Reservation>reservations;
+
+
+
+
+    public Client(String nom, String mail, String number) {
+              this.nom = nom;
+              this.email = mail;
+              this.Telephone = number;
+    }
 }
