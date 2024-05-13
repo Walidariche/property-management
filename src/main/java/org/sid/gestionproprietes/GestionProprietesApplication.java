@@ -123,6 +123,7 @@ public class GestionProprietesApplication {
               reservation1.setDate_fin(dateFIN);
             long diffInMillies = Math.abs(dateFIN.getTime() - dateDebut.getTime());
             long diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            reservation1.setReserved(true);
               reservation1.setMontant(prix *diffInDays);
             reservationRepository.save(reservation1);
 

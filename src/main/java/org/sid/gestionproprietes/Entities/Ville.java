@@ -1,5 +1,7 @@
 package org.sid.gestionproprietes.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,5 +25,6 @@ public class Ville implements Serializable {
     private String adresse;
 
     @OneToMany(mappedBy = "ville")
+    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
     private List<Hebergement> hebergements;
 }

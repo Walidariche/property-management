@@ -22,6 +22,7 @@ public class Reservation implements Serializable {
     private Date date_fin;
     private Date date_reservation;
     private Double montant;
+    private Boolean reserved;
 
     @ManyToOne
     private Hebergement hebergement;

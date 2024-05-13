@@ -1,5 +1,7 @@
 package org.sid.gestionproprietes.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,14 +25,15 @@ public class Client implements Serializable {
     private String Telephone;
 
     @OneToMany(mappedBy = "client")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Reservation>reservations;
 
 
 
 
-    public Client(String nom, String mail, String number) {
-              this.nom = nom;
-              this.email = mail;
-              this.Telephone = number;
+      public Client(String nom, String mail, String number) {
+            this.nom = nom;
+            this.email = mail;
+            this.Telephone = number;
     }
 }

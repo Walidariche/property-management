@@ -1,5 +1,6 @@
 package org.sid.gestionproprietes.Entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,5 +32,6 @@ public class Hebergement implements Serializable {
     private Ville ville;
 
     @OneToMany(mappedBy = "hebergement")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Reservation>reservations;
 }
