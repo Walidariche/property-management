@@ -25,6 +25,6 @@ public class Ville implements Serializable {
     private String adresse;
 
     @OneToMany(mappedBy = "ville")
-    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Hebergement> hebergements;
 }

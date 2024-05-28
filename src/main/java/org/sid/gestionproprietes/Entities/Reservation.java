@@ -23,6 +23,9 @@ public class Reservation implements Serializable {
     private Date date_reservation;
     private Double montant;
     private Boolean reserved;
+    private String nom;
+    private String email;
+    private String Telephone;
 
     @ManyToOne
     private Hebergement hebergement;

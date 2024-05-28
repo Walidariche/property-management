@@ -25,6 +25,7 @@ public interface HebergementService {
     public List<Reservation> listAllReservation();
 
     public List<Ville> listAllVille();
+    public List<Categorie> listAllCategorie();
 
 
 }

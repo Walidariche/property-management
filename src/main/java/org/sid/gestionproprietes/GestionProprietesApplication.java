@@ -68,6 +68,7 @@ public class GestionProprietesApplication {
             Random random = new Random();
                              double[] prices=new double[]{200,300,400,500,600,700,800,900,1000};
                              double[] capacite=new double[]{100,110,120,130,140,150,160,170};
+
                           List<Ville> villes = villeRepository.findAll();
                           List<Categorie > catgories= categorieRepository.findAll();
 
@@ -84,6 +85,11 @@ public class GestionProprietesApplication {
                           hebergement.setPrix(prices[random.nextInt(prices.length)]);
                           hebergement.setCapacite(capacite[random.nextInt(capacite.length)]);
                           hebergement.setImage(nomHeber.replace(" ","")+".jpg");
+
+                          hebergement.setChambre((int) (Math.random()*10)+1);
+                          hebergement.setEtage((int) (Math.random()*3)+1);
+                          hebergement.setSallesdebains((int) (Math.random()*3)+1);
+                          hebergement.setPlacesdestationnement((int) (Math.random()*4)+1);
                             hebergementRepository.save(hebergement);
 
 
@@ -125,6 +131,23 @@ public class GestionProprietesApplication {
             long diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
             reservation1.setReserved(true);
               reservation1.setMontant(prix *diffInDays);
+
+                   Map<String,String> Client = new HashMap<>();
+                   Client.put("ahmed", "ahmed@gmail.com");
+                   Client.put("mustapha", "mustapha@gmail.com");
+                   Client.put("nora", "nora@gmail.com");
+
+                   Client.forEach((nom,email)->{
+
+                         reservation1.setNom(nom);
+                         reservation1.setEmail(email);
+                         reservation1.setTelephone("0641874034");
+
+
+                   });
+
+
+
             reservationRepository.save(reservation1);
 
 

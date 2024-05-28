@@ -1,5 +1,6 @@
 package org.sid.gestionproprietes.Web;
 
+import org.sid.gestionproprietes.Entities.Categorie;
 import org.sid.gestionproprietes.Entities.Hebergement;
 import org.sid.gestionproprietes.Entities.Reservation;
 import org.sid.gestionproprietes.Entities.Ville;
@@ -8,19 +9,24 @@ import org.sid.gestionproprietes.Repository.HebergementRepository;
 import org.sid.gestionproprietes.Repository.VilleRepository;
 import org.sid.gestionproprietes.Service.HebergementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Locale;
 
 @RestController
-
+@CrossOrigin("*")
 public class HebergementController {
 
     @Autowired
@@ -89,5 +95,15 @@ public class HebergementController {
         return villes;
     }
 
+    @GetMapping("/categories")
+    public List<Categorie> getCategories() {
+
+        List<Categorie> Categories =hebergementService.listAllCategorie();
+        return Categories;
+    }
 
 }
+
+
+
+

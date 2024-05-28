@@ -1,12 +1,11 @@
 package org.sid.gestionproprietes.Service;
 import jakarta.transaction.Transactional;
-import org.sid.gestionproprietes.Entities.Hebergement;
-import org.sid.gestionproprietes.Entities.Reservation;
-import org.sid.gestionproprietes.Entities.Ville;
+import org.sid.gestionproprietes.Entities.*;
 import org.sid.gestionproprietes.Repository.*;
 import org.sid.gestionproprietes.Web.HebergementController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration;
+import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,7 +29,8 @@ public class hebergementServiceImpl implements HebergementService{
     private ReservationRepository reservationRepository;
     @Autowired
     private VilleRepository villeRepository;
-
+    @Autowired
+    private JdbcClient jdbcClient;
 
 
     @Override
@@ -61,7 +61,7 @@ public class hebergementServiceImpl implements HebergementService{
 
             hebergementRepository.save(hebergement);
 
-        return hebergement;
+             return hebergement;
 
 
     }
@@ -84,6 +84,12 @@ public class hebergementServiceImpl implements HebergementService{
         return villeList;
     }
 
+    @Override
+    public List<Categorie> listAllCategorie() {
+
+        List<Categorie> categorieList =categorieRepository.findAll();
+        return categorieList;
+    }
 
 
     @Override
@@ -98,6 +104,8 @@ public class hebergementServiceImpl implements HebergementService{
           reservation.setReserved(true);
         reservation.setDate_reservation(new Date());
            reservation.setMontant(price);
+
+
 
 
         reservationRepository.save(reservation);

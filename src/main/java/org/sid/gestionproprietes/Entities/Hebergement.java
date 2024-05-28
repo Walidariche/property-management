@@ -24,11 +24,16 @@ public class Hebergement implements Serializable {
     private String description;
     private Double prix;
     private Double capacite;
+    private int chambre;
+    private int sallesdebains;
+    private int placesdestationnement;
+    private int etage;
 
     @ManyToOne
     private Categorie categorie;
 
     @ManyToOne
+
     private Ville ville;
 
     @OneToMany(mappedBy = "hebergement")
