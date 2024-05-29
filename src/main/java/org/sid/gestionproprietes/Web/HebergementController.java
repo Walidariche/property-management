@@ -10,12 +10,15 @@ import org.sid.gestionproprietes.Repository.VilleRepository;
 import org.sid.gestionproprietes.Service.HebergementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.print.Pageable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -52,8 +55,14 @@ public class HebergementController {
         hebergementService.deleteHebergement(id);
     }
 
+    @GetMapping("/hebergement/{id}")
+    public Hebergement getHebergementbyid (@PathVariable Long id){
+         Hebergement hebergement=hebergementRepository.findById(id).get();
+         return hebergement;
+    }
+
     @PutMapping("/updateHebergement")
-    public void updateHebergement(@RequestBody Hebergement hebergement){
+    public void updateHebergement( @RequestBody Hebergement hebergement){
 
         hebergementService.modifyHebergement(hebergement);
     }
@@ -82,9 +91,8 @@ public class HebergementController {
    }
 
     @GetMapping("/AllReservations")
-    public List<Reservation> getAllReservations() {
-
-        List<Reservation> reservations= hebergementService.listAllReservation();
+    public Page<Reservation> getAllReservations(@RequestParam int page, @RequestParam int size) {
+        Page<Reservation> reservations= hebergementService.listAllReservation(page,size);
         return reservations;
     }
 

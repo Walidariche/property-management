@@ -1,10 +1,12 @@
 package org.sid.gestionproprietes.Service;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.sid.gestionproprietes.Entities.*;
 import org.sid.gestionproprietes.Repository.*;
-import org.sid.gestionproprietes.Web.HebergementController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -51,8 +54,27 @@ public class hebergementServiceImpl implements HebergementService{
 
     @Override
     public Hebergement modifyHebergement(Hebergement hebergement) {
-        Hebergement hebergement1 = hebergementRepository.save(hebergement);
-        return hebergement1;
+        Optional<Hebergement> existingHebergementOpt = hebergementRepository.findById(hebergement.getId());
+        if (existingHebergementOpt.isPresent()) {
+            Hebergement existingHebergement = existingHebergementOpt.get();
+
+
+            if (hebergement.getNom() != null) existingHebergement.setNom(hebergement.getNom());
+            if (hebergement.getImage() != null) existingHebergement.setImage(hebergement.getImage().replaceAll(" ","")+".jpg");
+            if (hebergement.getDescription() != null) existingHebergement.setDescription(hebergement.getDescription());
+            if (hebergement.getPrix() != null) existingHebergement.setPrix(hebergement.getPrix());
+            if (hebergement.getCapacite() != null) existingHebergement.setCapacite(hebergement.getCapacite());
+            if (hebergement.getChambre() != 0) existingHebergement.setChambre(hebergement.getChambre());
+            if (hebergement.getSallesdebains() != 0) existingHebergement.setSallesdebains(hebergement.getSallesdebains());
+            if (hebergement.getPlacesdestationnement() != 0) existingHebergement.setPlacesdestationnement(hebergement.getPlacesdestationnement());
+            if (hebergement.getEtage() != 0) existingHebergement.setEtage(hebergement.getEtage());
+            if (hebergement.getCategorie() != null) existingHebergement.setCategorie(hebergement.getCategorie());
+            if (hebergement.getVille() != null) existingHebergement.setVille(hebergement.getVille());
+
+            return hebergementRepository.save(existingHebergement);
+        } else {
+            throw new EntityNotFoundException("Hebergement not found with id " + hebergement.getId());
+        }
     }
     @Override
     public Hebergement saveHebergement(Hebergement hebergement) {
@@ -69,10 +91,9 @@ public class hebergementServiceImpl implements HebergementService{
 
 
     @Override
-     public List<Reservation> listAllReservation() {
-
-       List<Reservation> reservationList =reservationRepository.findAll();
-        return reservationList;
+     public Page<Reservation> listAllReservation(int page, int size) {
+        Pageable pageable= PageRequest.of(page, size);
+        return  reservationRepository.findAll(pageable);
 
     }
 

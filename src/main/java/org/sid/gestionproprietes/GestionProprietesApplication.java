@@ -65,6 +65,8 @@ public class GestionProprietesApplication {
                  descriptionheberhement.put("Chalet Montagne", " Plongez dans l'atmosphère chaleureuse et rustique de notre Chalet Montagne");
                  descriptionheberhement.put("Appartement Vue Mer", "étendez-vous et admirez les vagues depuis notre Appartement Vue Mer");
                  descriptionheberhement.put("Cabane dans les Arbres", "Vivez une expérience unique en séjournant dans notre Cabane dans les Arbres");
+                 descriptionheberhement.put("a", "Vivez une expérience unique en séjournant dans notre Cabane dans les Arbres");
+                 descriptionheberhement.put("b", "Vivez une expérience unique en séjournant dans notre Cabane dans les Arbres");
             Random random = new Random();
                              double[] prices=new double[]{200,300,400,500,600,700,800,900,1000};
                              double[] capacite=new double[]{100,110,120,130,140,150,160,170};
@@ -101,6 +103,7 @@ public class GestionProprietesApplication {
             clients.add(new Client("anas","anas@gmail.COM","0676589542"));
             clients.add(new Client("mustapha","mustapha@gmail.COM","0678543198"));
             clients.add(new Client("ibrahim","ibrahim@gmail.COM","0694825792"));
+
                clientRepository.saveAll(clients);
 
 
@@ -121,7 +124,7 @@ public class GestionProprietesApplication {
             Date dateFIN = calendar.getTime();
             Reservation reservation1=new Reservation();
             reservation1.setClient(clients.get(random.nextInt(clients.size())));
-            //reservation1.setHebergement(hebergements.get(random.nextInt(hebergements.size())));
+
                    reservation1.setHebergement(hebergements);
            double prix=   reservation1.getHebergement().getPrix();
              reservation1.setDate_reservation(dateres);
@@ -141,7 +144,7 @@ public class GestionProprietesApplication {
 
                          reservation1.setNom(nom);
                          reservation1.setEmail(email);
-                         reservation1.setTelephone("0641874034");
+                         reservation1.setTelephone("0634456576");
 
 
                    });

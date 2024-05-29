@@ -4,6 +4,7 @@ import org.sid.gestionproprietes.Entities.Categorie;
 import org.sid.gestionproprietes.Entities.Hebergement;
 import org.sid.gestionproprietes.Entities.Reservation;
 import org.sid.gestionproprietes.Entities.Ville;
+import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -22,7 +23,7 @@ public interface HebergementService {
 
     public Reservation saveRESERVATION(Reservation reservation);
 
-    public List<Reservation> listAllReservation();
+    public Page<Reservation> listAllReservation(int page, int size);
 
     public List<Ville> listAllVille();
     public List<Categorie> listAllCategorie();
