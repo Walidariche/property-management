@@ -1,9 +1,6 @@
 package org.sid.gestionproprietes.Service;
 
-import org.sid.gestionproprietes.Entities.Categorie;
-import org.sid.gestionproprietes.Entities.Hebergement;
-import org.sid.gestionproprietes.Entities.Reservation;
-import org.sid.gestionproprietes.Entities.Ville;
+import org.sid.gestionproprietes.Entities.*;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,7 +10,7 @@ import java.util.List;
 
 public interface HebergementService {
 
-    public List<Hebergement> listAllHebergement();
+    public Page<Hebergement> listAllHebergement(int page,int size);
 
     public void deleteHebergement(Long id);
 
@@ -27,6 +24,8 @@ public interface HebergementService {
 
     public List<Ville> listAllVille();
     public List<Categorie> listAllCategorie();
+
+    public void saveEnvoiEmail(String Toemail,String subject ,String body);
 
 
 }

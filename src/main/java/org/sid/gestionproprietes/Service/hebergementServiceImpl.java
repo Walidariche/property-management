@@ -2,12 +2,15 @@ package org.sid.gestionproprietes.Service;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.sid.gestionproprietes.Entities.*;
+import org.sid.gestionproprietes.Entities.EnvoiEmail;
 import org.sid.gestionproprietes.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -34,13 +37,17 @@ public class hebergementServiceImpl implements HebergementService{
     private VilleRepository villeRepository;
     @Autowired
     private JdbcClient jdbcClient;
+    @Autowired
+    private JavaMailSender mailSender;
+    @Autowired
+    private EnvoiEmailRepository envoiEmailRepository;
 
 
     @Override
-    public List<Hebergement> listAllHebergement() {
+    public Page<Hebergement> listAllHebergement(int page, int size) {
+       Pageable pageable=PageRequest.of(page, size);
 
-       List<Hebergement> hebergement =hebergementRepository.findAll();
-        return hebergement;
+        return   hebergementRepository.findAll(pageable);
     }
 
 
@@ -79,24 +86,14 @@ public class hebergementServiceImpl implements HebergementService{
     @Override
     public Hebergement saveHebergement(Hebergement hebergement) {
              hebergement.setImage(hebergement.getImage().replaceAll(" ","")+".jpg");
-
-
             hebergementRepository.save(hebergement);
-
              return hebergement;
-
-
     }
-
-
-
     @Override
      public Page<Reservation> listAllReservation(int page, int size) {
         Pageable pageable= PageRequest.of(page, size);
         return  reservationRepository.findAll(pageable);
-
     }
-
     @Override
     public List<Ville> listAllVille() {
 
@@ -110,6 +107,20 @@ public class hebergementServiceImpl implements HebergementService{
 
         List<Categorie> categorieList =categorieRepository.findAll();
         return categorieList;
+    }
+
+    @Override
+    public void saveEnvoiEmail(String Toemail,String subject ,String body) {
+      EnvoiEmail envoiEmail=new EnvoiEmail();
+      envoiEmail.setBody(body);
+      envoiEmail.setSubject(subject);
+      envoiEmail.setBody(body);
+
+           envoiEmailRepository.save(envoiEmail);
+
+
+
+
     }
 
 

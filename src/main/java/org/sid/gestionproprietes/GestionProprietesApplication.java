@@ -2,11 +2,15 @@ package org.sid.gestionproprietes;
 
 import org.sid.gestionproprietes.Entities.*;
 import org.sid.gestionproprietes.Repository.*;
+import org.sid.gestionproprietes.Service.HebergementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationEvent;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.event.EventListener;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -30,6 +34,9 @@ public class GestionProprietesApplication {
      private ClientRepository clientRepository;
      @Autowired
      private ReservationRepository reservationRepository;
+     @Autowired
+     private HebergementService hebergementService;
+
 
     @Bean
     CommandLineRunner commandLineRunner(VilleRepository villeRepository,

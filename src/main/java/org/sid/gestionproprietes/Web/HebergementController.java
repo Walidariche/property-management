@@ -1,32 +1,24 @@
 package org.sid.gestionproprietes.Web;
 
-import org.sid.gestionproprietes.Entities.Categorie;
-import org.sid.gestionproprietes.Entities.Hebergement;
-import org.sid.gestionproprietes.Entities.Reservation;
-import org.sid.gestionproprietes.Entities.Ville;
+import org.sid.gestionproprietes.Entities.*;
 import org.sid.gestionproprietes.Repository.CategorieRepository;
+import org.sid.gestionproprietes.Repository.EnvoiEmailRepository;
 import org.sid.gestionproprietes.Repository.HebergementRepository;
 import org.sid.gestionproprietes.Repository.VilleRepository;
 import org.sid.gestionproprietes.Service.HebergementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.print.Pageable;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.Locale;
 
 @RestController
 @CrossOrigin("*")
@@ -41,9 +33,12 @@ public class HebergementController {
     @Autowired
     private HebergementRepository hebergementRepository;
 
+    @Autowired
+    private JavaMailSender mailSender;
+
     @GetMapping("/hebergements")
-    public List<Hebergement> getHebergements() {
-       List<Hebergement> hebergements= hebergementService.listAllHebergement();
+    public Page<Hebergement> getHebergements(@RequestParam int page,@RequestParam int size) {
+       Page<Hebergement> hebergements= hebergementService.listAllHebergement(page, size);
 
         return hebergements;
     }
@@ -109,6 +104,30 @@ public class HebergementController {
         List<Categorie> Categories =hebergementService.listAllCategorie();
         return Categories;
     }
+
+  /*  @GetMapping("/EnvoiEmail")
+    public void sendEmail(){
+   EnvoiEmailRepository envoiEmailRepository;
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("walid.aariche2001@gmail.com");
+        message.setTo("walid.aariche2001@gmail.com");
+        message.setText("body");
+        message.setSubject("subject");
+
+        mailSender.send(message);
+
+    }*/
+  @PostMapping("/EnvoiEmail")
+  public void sendEmail(@RequestBody EnvoiEmail envoiEmail) {
+      SimpleMailMessage message = new SimpleMailMessage();
+      message.setFrom("walid.aariche2001@gmail.com");
+      message.setTo(envoiEmail.getToemail());
+      message.setText(envoiEmail.getBody());
+      message.setSubject(envoiEmail.getSubject());
+
+      mailSender.send(message);
+  }
 
 }
 

@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 @CrossOrigin("*")
 public interface HebergementRepository extends JpaRepository<Hebergement, Long> {
-
-
+    @Override
+    Page<Hebergement> findAll(Pageable pageable);
 }
 

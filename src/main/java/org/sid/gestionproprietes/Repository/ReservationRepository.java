@@ -14,4 +14,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     @Override
     Page<Reservation> findAll(Pageable pageable);
+
 }
